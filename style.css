@@ -146,3 +146,43 @@ footer {
   text-align: center;
 }
 
+
+
+
+.releases {
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.release-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.release img {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.release h2 {
+  margin: 1rem 0 0.3rem;
+}
+
+.release a {
+  display: inline-block;
+  margin-top: 0.5rem;
+  text-decoration: none;
+  background: black;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: 0.3s ease;
+}
+
+.release a:hover {
+  background: #333;
+}
+
