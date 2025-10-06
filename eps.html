@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EPs - Will Silver</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    main {
+      max-width: 900px;
+      margin: 100px auto;
+      padding: 0 20px;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+
+    .ep-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .ep-card {
+      background: #111;
+      color: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .ep-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    }
+
+    .ep-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .ep-info {
+      padding: 1rem 1.2rem;
+    }
+
+    .ep-info h2 {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .ep-info p {
+      font-size: 0.95rem;
+      color: #ccc;
+      margin-bottom: 0.8rem;
+    }
+
+    .ep-links a {
+      color: #1db954;
+      text-decoration: none;
+      margin-right: 1rem;
+      font-weight: 500;
+    }
+
+    .ep-links a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="logo">WILL SILVER</a>
+    <div class="nav-links">
+      <a href="mixes.html">Mixes</a>
+      <a href="shows.html">Shows</a>
+      <a href="eps.html">EPs</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+
+  <main>
+    <h1>EPs</h1>
+    <div class="ep-grid">
+
+      <!-- EP 1 -->
+      <div class="ep-card">
+        <img src="images/ep1-cover.jpg" alt="EP 1 Cover">
+        <div class="ep-info">
+          <h2>Midnight Rhythm</h2>
+          <p>Released on Deep Circuit Records · 2024</p>
+          <div class="ep-links">
+            <a href="https://open.spotify.com/" target="_blank">Spotify</a>
+            <a href="https://bandcamp.com/" target="_blank">Bandcamp</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- EP 2 -->
+      <div class="ep-card">
+        <img src="images/ep2-cover.jpg" alt="EP 2 Cover">
+        <div class="ep-info">
+          <h2>Parallel Motion</h2>
+          <p>Released on Shift Audio · 2023</p>
+          <div class="ep-links">
+            <a href="https://open.spotify.com/" target="_blank">Spotify</a>
+            <a href="https://bandcamp.com/" target="_blank">Bandcamp</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add more EPs below -->
+      <!-- <div class="ep-card">...</div> -->
+
+    </div>
+  </main>
+
+</body>
+</html>
