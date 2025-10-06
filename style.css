@@ -1,0 +1,91 @@
+body {
+  background-color: #0a0a0a;
+  color: #f5f5f5;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background-color: #0a0a0a;
+  border-bottom: 1px solid #222;
+}
+
+.logo {
+  font-weight: 700;
+  color: #f5f5f5;
+  text-decoration: none;
+  letter-spacing: 2px;
+}
+
+.nav-links a {
+  color: #f5f5f5;
+  text-decoration: none;
+  margin-left: 25px;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  transition: opacity 0.3s;
+}
+
+.nav-links a:hover {
+  opacity: 0.6;
+}
+
+.hero {
+  text-align: center;
+  margin-top: 100px;
+}
+
+.hero h1 {
+  font-size: 3em;
+  letter-spacing: 1px;
+}
+
+.hero p {
+  font-size: 1.2em;
+  color: #ccc;
+}
+
+.bio, .socials {
+  max-width: 800px;
+  margin: 100px auto;
+  padding: 0 20px;
+  line-height: 1.7;
+}
+
+.bio h2, .socials h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.socials .links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.socials a {
+  color: #00bcd4;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.socials a:hover {
+  color: #fff;
+}
+
+footer {
+  text-align: center;
+  padding: 40px 0;
+  font-size: 0.85rem;
+  color: #777;
+  border-top: 1px solid #222;
+}
