@@ -3,7 +3,7 @@
    ================================ */
 body {
   background-color: #0a0a0a; /* dark background */
-  color: #f5f5f5;            /* light text colour */
+  color: #77029E;            /* purple */
   font-family: 'Helvetica Neue', Arial, sans-serif;
   margin: 0;
   padding: 0;
@@ -24,14 +24,14 @@ nav {
 /* LOGO (top left text) */
 .logo {
   font-weight: 700;                  /* bold text */
-  color: #8c0303;                    /* deep red colour */
+  color: #77029E;                    /* purple */
   text-decoration: none;
   letter-spacing: 2px;               /* extra space between letters */
 }
 
 /* NAV LINKS (top right tabs like Mixes, Shows, etc.) */
 .nav-links a {
-  color: #8c0303;                    /* deep red */
+  color: #77029E;                    /* purple */
   text-decoration: none;
   margin-left: 25px;                 /* space between each link */
   font-size: 0.95rem;
