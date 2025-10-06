@@ -8,59 +8,76 @@
   <style>
     body {
       background-color: #0a0a0a;
-      color: #77029e; /* all text in this colour */
+      color: #77029e;
       font-family: 'Helvetica Neue', Arial, sans-serif;
       margin: 0;
       padding: 0;
       overflow: hidden;
+      height: 100vh;
+      position: relative;
     }
 
-    /* MAIN NAME TOP CENTER */
+    /* MAIN TITLE TOP CENTER */
     .main-name {
       position: absolute;
-      top: 40px; /* near top */
+      top: 40px;
       left: 50%;
       transform: translateX(-50%);
-      font-size: 4rem; /* smaller than before */
+      font-size: 4rem;
       font-weight: 900;
       letter-spacing: 5px;
       text-align: center;
     }
 
-    /* NAV LINKS - floating, no boxes */
+    /* NAV LINKS - floating */
     .nav-link {
       position: absolute;
       text-decoration: none;
       color: #77029e;
-      font-size: 2rem; /* bigger font */
-      transition: transform 0.3s, color 0.3s;
+      font-size: 2rem;
       font-weight: 600;
+      transition: transform 0.3s, color 0.3s;
     }
 
     .nav-link:hover {
       transform: scale(1.2);
-      color: #f5f5f5; /* hover colour */
+      color: #f5f5f5;
     }
-
-    /* RANDOM POSITIONS */
-    .mixes { top: 20%; left: 15%; }
-    .shows { top: 65%; left: 25%; }
-    .releases { top: 35%; left: 70%; }
-    .contact { top: 80%; left: 60%; }
-
   </style>
 </head>
 <body>
 
-  <!-- Main title -->
   <div class="main-name">WILL SILVER</div>
 
-  <!-- Floating nav links -->
-  <a href="mixes.html" class="nav-link mixes">Mixes</a>
-  <a href="shows.html" class="nav-link shows">Shows</a>
-  <a href="releases.html" class="nav-link releases">Releases</a>
-  <a href="contact.html" class="nav-link contact">Contact</a>
+  <a href="mixes.html" class="nav-link" id="mixes">Mixes</a>
+  <a href="shows.html" class="nav-link" id="shows">Shows</a>
+  <a href="releases.html" class="nav-link" id="releases">Releases</a>
+  <a href="contact.html" class="nav-link" id="contact">Contact</a>
+
+  <script>
+    // Floating animation for links
+    const links = document.querySelectorAll('.nav-link');
+
+    links.forEach(link => {
+      let x = Math.random() * window.innerWidth * 0.8;
+      let y = Math.random() * window.innerHeight * 0.8;
+      link.style.left = x + 'px';
+      link.style.top = y + 'px';
+
+      // Animate movement
+      setInterval(() => {
+        x += (Math.random() - 0.5) * 2; // small horizontal move
+        y += (Math.random() - 0.5) * 2; // small vertical move
+
+        // Keep inside window bounds
+        x = Math.max(0, Math.min(window.innerWidth - link.offsetWidth, x));
+        y = Math.max(0, Math.min(window.innerHeight - link.offsetHeight, y));
+
+        link.style.left = x + 'px';
+        link.style.top = y + 'px';
+      }, 50); // moves every 50ms
+    });
+  </script>
 
 </body>
 </html>
-
