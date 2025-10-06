@@ -89,3 +89,35 @@ footer {
   color: #777;
   border-top: 1px solid #222;
 }
+
+.contact-form {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.contact-form input[type="email"] {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  width: 250px;
+  font-size: 1rem;
+}
+
+.contact-form button {
+  background-color: #00bcd4;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: #0a0a0a;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.contact-form button:hover {
+  opacity: 0.8;
+}
+
