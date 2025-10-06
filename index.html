@@ -4,12 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Will Silver</title>
-  <link rel="stylesheet" href="style.css">
+
+  <!-- Aileron Heavy font -->
+  <link href="https://fonts.cdnfonts.com/css/aileron-heavy" rel="stylesheet">
+
   <style>
     body {
-      background-color: #0a0a0a;
+      background-color: #000000; /* pure black */
       color: #77029e;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-family: 'Aileron Heavy', sans-serif;
       margin: 0;
       padding: 0;
       overflow: hidden;
@@ -24,18 +27,16 @@
       left: 50%;
       transform: translateX(-50%);
       font-size: 4rem;
-      font-weight: 900;
       letter-spacing: 5px;
       text-align: center;
     }
 
-    /* NAV LINKS - floating */
+    /* NAV LINKS - floating and smooth */
     .nav-link {
       position: absolute;
       text-decoration: none;
       color: #77029e;
       font-size: 2rem;
-      font-weight: 600;
       transition: transform 0.3s, color 0.3s;
     }
 
@@ -55,29 +56,33 @@
   <a href="contact.html" class="nav-link" id="contact">Contact</a>
 
   <script>
-    // Floating animation for links
     const links = document.querySelectorAll('.nav-link');
 
     links.forEach(link => {
-      let x = Math.random() * window.innerWidth * 0.8;
-      let y = Math.random() * window.innerHeight * 0.8;
-      link.style.left = x + 'px';
-      link.style.top = y + 'px';
+      // Initial random positions
+      let baseX = Math.random() * (window.innerWidth - 100);
+      let baseY = Math.random() * (window.innerHeight - 100);
+      let amplitudeX = 50 + Math.random() * 50; // horizontal drift
+      let amplitudeY = 30 + Math.random() * 50; // vertical drift
+      let speedX = 0.001 + Math.random() * 0.002; 
+      let speedY = 0.001 + Math.random() * 0.002; 
+      let phaseX = Math.random() * 2 * Math.PI;
+      let phaseY = Math.random() * 2 * Math.PI;
 
-      // Animate movement
-      setInterval(() => {
-        x += (Math.random() - 0.5) * 2; // small horizontal move
-        y += (Math.random() - 0.5) * 2; // small vertical move
-
-        // Keep inside window bounds
-        x = Math.max(0, Math.min(window.innerWidth - link.offsetWidth, x));
-        y = Math.max(0, Math.min(window.innerHeight - link.offsetHeight, y));
+      function animate(time) {
+        const x = baseX + Math.sin(time * speedX + phaseX) * amplitudeX;
+        const y = baseY + Math.sin(time * speedY + phaseY) * amplitudeY;
 
         link.style.left = x + 'px';
         link.style.top = y + 'px';
-      }, 50); // moves every 50ms
+
+        requestAnimationFrame(animate);
+      }
+
+      requestAnimationFrame(animate);
     });
   </script>
 
 </body>
 </html>
+
