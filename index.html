@@ -112,8 +112,8 @@
     const box = document.querySelector(".floating-box");
 
     const tabData = [];
-    const speed = 0.2; // base bounce speed
-    const swayStrength = 0.2; // slow floating sway
+    const speed = 0.2;
+    const swayStrength = 0.2;
 
     const boxWidth = box.clientWidth;
     const boxHeight = box.clientHeight;
@@ -124,22 +124,25 @@
       const vx = (Math.random() - 0.5) * speed;
       const vy = (Math.random() - 0.5) * speed;
 
-      // Random sway offsets for smooth drift
       const swayX = Math.random() * 0.02;
       const swayY = Math.random() * 0.02;
       const swayPhase = Math.random() * 2 * Math.PI;
 
-      tabData.push({el: tab, x, y, vx, vy, swayX, swayY, swayPhase});
+      const rotation = (Math.random() - 0.5) * 5; // initial rotation (-2.5 to 2.5deg)
+      const rotationSpeed = (Math.random() - 0.5) * 0.05; // slow rotation
+
+      tabData.push({el: tab, x, y, vx, vy, swayX, swayY, swayPhase, rotation, rotationSpeed});
       tab.style.left = x + "px";
       tab.style.top = y + "px";
+      tab.style.transform = `rotate(${rotation}deg)`;
     });
 
     function animate() {
       tabData.forEach(tab => {
-        // Update positions
+        // Update positions with sway
         tab.x += tab.vx + Math.sin(tab.swayPhase) * tab.swayX;
         tab.y += tab.vy + Math.sin(tab.swayPhase) * tab.swayY;
-        tab.swayPhase += 0.01; // controls sway speed
+        tab.swayPhase += 0.01;
 
         // Bounce off box edges
         if (tab.x <= 0 || tab.x + tab.el.offsetWidth >= box.clientWidth) tab.vx *= -1;
@@ -162,8 +165,12 @@
           }
         });
 
+        // Update rotation
+        tab.rotation += tab.rotationSpeed;
+
         tab.el.style.left = tab.x + "px";
         tab.el.style.top = tab.y + "px";
+        tab.el.style.transform = `rotate(${tab.rotation}deg)`;
       });
 
       requestAnimationFrame(animate);
@@ -172,12 +179,9 @@
     animate();
 
     window.addEventListener('resize', () => {
-      const boxWidth = box.clientWidth;
-      const boxHeight = box.clientHeight;
-
       tabData.forEach(tab => {
-        tab.x = Math.min(tab.x, boxWidth - tab.el.offsetWidth);
-        tab.y = Math.min(tab.y, boxHeight - tab.el.offsetHeight);
+        tab.x = Math.min(tab.x, box.clientWidth - tab.el.offsetWidth);
+        tab.y = Math.min(tab.y, box.clientHeight - tab.el.offsetHeight);
       });
     });
   </script>
