@@ -222,7 +222,7 @@ footer {
 /* Responsive SoundCloud embed */
 .soundcloud-wrapper {
   position: relative;
-  padding-bottom: 166px; /* default SoundCloud height */
+  padding-bottom: 480px; /* approximate height for visual=true player */
   height: 0;
   overflow: hidden;
   max-width: 100%;
@@ -250,4 +250,5 @@ footer {
   color: #cccccc;
   text-decoration: none;
 }
+
 
