@@ -1,123 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Will Silver</title>
 
-  <!-- Aileron Heavy font -->
-  <link href="https://fonts.cdnfonts.com/css/aileron-heavy" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background-color: black;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
 
-<style>
-  body {
-    background-color: #010101; /* solid black with no flicker */
-    color: #77029e;
-    font-family: 'Aileron Heavy', sans-serif;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    height: 100vh;
-    position: relative;
-    transform: translateZ(0);
-    will-change: transform;
-  }
+    /* Floating nav links */
+    .nav-link {
+      position: absolute;
+      text-decoration: none;
+      color: #77029e;
+      font-size: 2rem;
+      font-weight: 600;
+      text-shadow: 0 0 10px #77029e, 0 0 20px #77029e, 0 0 30px #77029e;
+      filter: blur(0.5px);
+      transition: transform 0.3s ease, color 0.3s ease, text-shadow 0.3s ease;
+      user-select: none;
+      backface-visibility: hidden;
+      transform-origin: center center;
+    }
 
-  .nav-link {
-    position: absolute;
-    text-decoration: none;
-    color: #77029e;
-    font-size: 2rem;
-    font-weight: 600;
-    text-shadow: 0 0 10px #77029e, 0 0 20px #77029e, 0 0 30px #77029e;
-    filter: blur(0.5px);
-    transition: transform 0.3s ease, color 0.3s ease, text-shadow 0.3s ease;
-    user-select: none;
-    backface-visibility: hidden;
-  }
+    .nav-link:hover {
+      transform: scale(1.2);
+      color: #f5f5f5;
+      text-shadow: 0 0 20px #f5f5f5, 0 0 30px #f5f5f5, 0 0 40px #f5f5f5;
+    }
 
-  .nav-link:hover {
-    transform: scale(1.2);
-    color: #f5f5f5;
-    text-shadow: 0 0 20px #f5f5f5, 0 0 30px #f5f5f5, 0 0 40px #f5f5f5;
-  }
+    /* Static Contact link */
+    .contact-static {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #77029e;
+      text-decoration: none;
+      font-size: 1.5rem;
+      font-weight: 600;
+      text-shadow: 0 0 10px #77029e, 0 0 20px #77029e;
+      transition: color 0.3s ease, text-shadow 0.3s ease;
+    }
 
-  .contact-link {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 0.9rem;
-    text-decoration: none;
-    color: #77029e;
-    opacity: 0.7;
-    transition: opacity 0.3s, text-shadow 0.3s;
-    backface-visibility: hidden;
-  }
-
-  .contact-link:hover {
-    opacity: 1;
-    text-shadow: 0 0 10px #77029e, 0 0 20px #77029e;
-  }
-</style>
-
+    .contact-static:hover {
+      color: #f5f5f5;
+      text-shadow: 0 0 20px #f5f5f5, 0 0 30px #f5f5f5, 0 0 40px #f5f5f5;
+    }
+  </style>
 </head>
 <body>
+  <a href="releases.html" class="nav-link">Releases</a>
+  <a href="mixes.html" class="nav-link">Mixes</a>
+  <a href="shows.html" class="nav-link">Shows</a>
+  <a href="mailing.html" class="nav-link">Mailing List</a>
 
-  <a href="mixes.html" class="nav-link">MIXES</a>
-  <a href="shows.html" class="nav-link">SHOWS</a>
-  <a href="releases.html" class="nav-link">RELEASES</a>
-  <a href="mailing.html" class="nav-link">MAILING LIST</a>
-
-  <a href="mailto:willsilvermusic@gmail.com" class="contact-link">CONTACT</a>
+  <a href="contact.html" class="contact-static">Contact</a>
 
   <script>
     const links = Array.from(document.querySelectorAll('.nav-link'));
     const speed = 0.3;
     const directions = [];
+    const positions = [];
 
-    // Random start position and velocity
+    // Random start positions
     links.forEach(link => {
-      link.style.left = Math.random() * (window.innerWidth - 150) + 'px';
-      link.style.top = Math.random() * (window.innerHeight - 150) + 'px';
+      const x = Math.random() * (window.innerWidth - 150);
+      const y = Math.random() * (window.innerHeight - 150);
+      positions.push({ x, y });
       directions.push({
         dx: (Math.random() - 0.5) * speed * 2,
-        dy: (Math.random() - 0.5) * speed * 2,
-        paused: false
+        dy: (Math.random() - 0.5) * speed * 2
       });
-
-      // Pause motion when hovered
-      link.addEventListener('mouseenter', () => directions[links.indexOf(link)].paused = true);
-      link.addEventListener('mouseleave', () => directions[links.indexOf(link)].paused = false);
+      link.style.transform = `translate(${x}px, ${y}px)`;
     });
 
     function animate() {
       for (let i = 0; i < links.length; i++) {
         const link = links[i];
-        const d = directions[i];
-        if (d.paused) continue;
+        const pos = positions[i];
+        const dir = directions[i];
 
-        let rect = link.getBoundingClientRect();
+        pos.x += dir.dx;
+        pos.y += dir.dy;
 
-        // Bounce off walls
-        if (rect.left <= 0 || rect.right >= window.innerWidth) d.dx *= -1;
-        if (rect.top <= 0 || rect.bottom >= window.innerHeight - 60) d.dy *= -1;
+        const width = 150;
+        const height = 60;
 
-        // Move link
-        link.style.left = rect.left + d.dx + 'px';
-        link.style.top = rect.top + d.dy + 'px';
+        if (pos.x <= 0 || pos.x + width >= window.innerWidth) dir.dx *= -1;
+        if (pos.y <= 0 || pos.y + height >= window.innerHeight - 100) dir.dy *= -1;
 
-        // Collision with others
-        for (let j = i + 1; j < links.length; j++) {
-          const other = links[j];
-          const r1 = link.getBoundingClientRect();
-          const r2 = other.getBoundingClientRect();
-
-          if (!(r2.left > r1.right || r2.right < r1.left || r2.top > r1.bottom || r2.bottom < r1.top)) {
-            // Swap directions for a soft bounce
-            [d.dx, directions[j].dx] = [directions[j].dx, d.dx];
-            [d.dy, directions[j].dy] = [directions[j].dy, d.dy];
-          }
-        }
+        // Apply transform
+        link.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
       }
 
       requestAnimationFrame(animate);
@@ -125,16 +105,13 @@
 
     animate();
 
-    // Refit on resize
     window.addEventListener('resize', () => {
-      links.forEach(link => {
-        link.style.left = Math.min(parseFloat(link.style.left), window.innerWidth - 150) + 'px';
-        link.style.top = Math.min(parseFloat(link.style.top), window.innerHeight - 150) + 'px';
+      positions.forEach(pos => {
+        pos.x = Math.min(pos.x, window.innerWidth - 150);
+        pos.y = Math.min(pos.y, window.innerHeight - 150);
       });
     });
   </script>
-
 </body>
 </html>
-
 
