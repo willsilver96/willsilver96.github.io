@@ -9,9 +9,9 @@
     body {
       margin: 0;
       height: 100vh;
-      background-color: #0a0a0a; /* deep black */
+      background-color: #0a0a0a;
       overflow: hidden;
-      font-family: 'Arial', sans-serif;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
     }
 
     /* Floating box */
@@ -23,35 +23,43 @@
       width: 80vw;
       max-width: 1200px;
       height: 60vh;
-      border: 1.5px solid #9b59b6; /* thin purple outline */
-      background: rgba(0,0,0,0.2); /* subtle dark transparency */
+      border: 1.5px solid #9b59b6;
+      background: rgba(0,0,0,0.05);
       border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 0 60px rgba(155, 89, 182, 0.2); /* soft purple glow */
+      box-shadow: 0 0 60px rgba(155, 89, 182, 0.2);
     }
 
-    /* Tabs inside the box */
+    /* Floating tabs text */
     .nav-link {
       position: absolute;
       text-decoration: none;
       color: #9b59b6;
-      font-size: 1.8rem;
-      font-weight: 600;
-      user-select: none;
-      border-radius: 8px;
-      padding: 0.6rem 1.4rem;
-      background: rgba(0, 0, 0, 0.7); /* semi-transparent button */
-      border: 1px solid rgba(155, 89, 182, 0.5);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-      transition: transform 0.3s ease, color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+      font-size: 2rem;
+      font-weight: 400; /* lighter font weight */
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: transform 0.3s ease, color 0.3s ease, text-shadow 0.5s ease;
       cursor: pointer;
+      user-select: none;
+      text-shadow: 0 0 10px rgba(155,89,182,0.7);
+      will-change: transform;
+    }
+
+    /* Glow pulse on hover */
+    @keyframes pulse {
+      0%, 100% {
+        text-shadow: 0 0 10px rgba(155,89,182,0.7);
+      }
+      50% {
+        text-shadow: 0 0 20px rgba(155,89,182,1);
+      }
     }
 
     .nav-link:hover {
-      transform: scale(1.15);
+      transform: scale(1.2);
       color: #fff;
-      background: rgba(155, 89, 182, 0.8);
-      box-shadow: 0 4px 16px rgba(155,89,182,0.5);
+      animation: pulse 1s infinite;
     }
 
     /* Contact button outside box */
@@ -63,37 +71,27 @@
       color: #9b59b6;
       text-decoration: none;
       font-size: 1.5rem;
-      font-weight: 600;
-      padding: 0.5rem 1.5rem;
-      background: rgba(0,0,0,0.8);
-      border: 1px solid #9b59b6;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-      transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
+      font-weight: 400;
+      transition: transform 0.3s ease, color 0.3s ease, text-shadow 0.5s ease;
+      text-shadow: 0 0 10px rgba(155,89,182,0.7);
     }
 
     .contact-static:hover {
       transform: scale(1.05);
       color: #fff;
-      background: rgba(155,89,182,0.9);
-      box-shadow: 0 4px 16px rgba(155,89,182,0.5);
+      text-shadow: 0 0 20px rgba(155,89,182,1);
     }
 
-    /* Responsive tweaks */
     @media (max-width: 768px) {
       .floating-box {
         width: 90vw;
         height: 50vh;
       }
-
       .nav-link {
-        font-size: 1.4rem;
-        padding: 0.5rem 1rem;
+        font-size: 1.6rem;
       }
-
       .contact-static {
         font-size: 1.3rem;
-        padding: 0.4rem 1rem;
       }
     }
   </style>
@@ -135,7 +133,6 @@
         tab.x += tab.vx;
         tab.y += tab.vy;
 
-        // Bounce off box edges
         if (tab.x <= 0 || tab.x + tab.el.offsetWidth >= box.clientWidth) tab.vx *= -1;
         if (tab.y <= 0 || tab.y + tab.el.offsetHeight >= box.clientHeight) tab.vy *= -1;
 
@@ -175,6 +172,5 @@
       });
     });
   </script>
-
 </body>
 </html>
