@@ -8,53 +8,58 @@
   <!-- Aileron Heavy font -->
   <link href="https://fonts.cdnfonts.com/css/aileron-heavy" rel="stylesheet">
 
-  <style>
-    body {
-      background-color: #030303;
-      color: #77029e;
-      font-family: 'Aileron Heavy', sans-serif;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      height: 100vh;
-      position: relative;
-    }
+<style>
+  body {
+    background-color: #010101; /* slightly off-black to prevent flicker */
+    color: #77029e;
+    font-family: 'Aileron Heavy', sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100vh;
+    position: relative;
+    transform: translateZ(0); /* helps eliminate GPU flicker */
+    will-change: transform;
+  }
 
-    .nav-link {
-      position: absolute;
-      text-decoration: none;
-      color: #77029e;
-      font-size: 2rem;
-      font-weight: 600;
-      text-shadow: 0 0 10px #77029e, 0 0 20px #77029e, 0 0 30px #77029e;
-      filter: blur(0.5px);
-      transition: transform 0.3s, color 0.3s, text-shadow 0.3s;
-      user-select: none;
-    }
+  .nav-link {
+    position: absolute;
+    text-decoration: none;
+    color: #77029e;
+    font-size: 2rem;
+    font-weight: 600;
+    text-shadow: 0 0 10px #77029e, 0 0 20px #77029e, 0 0 30px #77029e;
+    filter: blur(0.5px);
+    transition: transform 0.3s ease, color 0.3s ease, text-shadow 0.3s ease;
+    user-select: none;
+    backface-visibility: hidden; /* prevents hover edge flicker */
+  }
 
-    .nav-link:hover {
-      transform: scale(1.2);
-      color: #f5f5f5;
-      text-shadow: 0 0 20px #f5f5f5, 0 0 30px #f5f5f5, 0 0 40px #f5f5f5;
-    }
+  .nav-link:hover {
+    transform: scale(1.2);
+    color: #f5f5f5;
+    text-shadow: 0 0 20px #f5f5f5, 0 0 30px #f5f5f5, 0 0 40px #f5f5f5;
+  }
 
-    .contact-link {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 0.9rem;
-      text-decoration: none;
-      color: #77029e;
-      opacity: 0.7;
-      transition: opacity 0.3s;
-    }
+  .contact-link {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.9rem;
+    text-decoration: none;
+    color: #77029e;
+    opacity: 0.7;
+    transition: opacity 0.3s, text-shadow 0.3s;
+    backface-visibility: hidden;
+  }
 
-    .contact-link:hover {
-      opacity: 1;
-      text-shadow: 0 0 10px #77029e, 0 0 20px #77029e;
-    }
-  </style>
+  .contact-link:hover {
+    opacity: 1;
+    text-shadow: 0 0 10px #77029e, 0 0 20px #77029e;
+  }
+</style>
+
 </head>
 <body>
 
