@@ -1,189 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Will Silver</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will Silver</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background-color: #0a0a0a;
+    overflow: hidden;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
 
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      background-color: #0a0a0a;
-      overflow: hidden;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-    }
+  .floating-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80vw;
+    max-width: 1200px;
+    height: 60vh;
+    border: 1.5px solid #9b59b6;
+    background: rgba(0,0,0,0.05);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 0 60px rgba(155, 89, 182, 0.2);
+  }
 
-    /* Floating box */
+  .nav-link {
+    position: absolute;
+    text-decoration: none;
+    color: #9b59b6;
+    font-size: 2rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    user-select: none;
+    text-shadow: 0 0 10px rgba(155,89,182,0.7);
+    will-change: transform;
+    transition: transform 0.3s ease, color 0.3s ease, text-shadow 0.5s ease;
+  }
+
+  .nav-link:hover {
+    transform: scale(1.2);
+    color: #fff;
+    text-shadow: 0 0 20px rgba(155,89,182,1);
+  }
+
+  .contact-static {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #9b59b6;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 400;
+    text-shadow: 0 0 10px rgba(155,89,182,0.7);
+    transition: transform 0.3s ease, color 0.3s ease, text-shadow 0.5s ease;
+  }
+
+  .contact-static:hover {
+    transform: scale(1.05);
+    color: #fff;
+    text-shadow: 0 0 20px rgba(155,89,182,1);
+  }
+
+  @media (max-width: 768px) {
     .floating-box {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 80vw;
-      max-width: 1200px;
-      height: 60vh;
-      border: 1.5px solid #9b59b6;
-      background: rgba(0,0,0,0.05);
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 0 60px rgba(155, 89, 182, 0.2);
+      width: 90vw;
+      height: 50vh;
     }
-
-    /* Floating tabs text */
     .nav-link {
-      position: absolute;
-      text-decoration: none;
-      color: #9b59b6;
-      font-size: 2rem;
-      font-weight: 400;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      transition: transform 0.3s ease, color 0.3s ease, text-shadow 0.5s ease;
-      cursor: pointer;
-      user-select: none;
-      text-shadow: 0 0 10px rgba(155,89,182,0.7);
-      will-change: transform;
+      font-size: 1.6rem;
     }
-
-    /* Glow pulse on hover */
-    @keyframes pulse {
-      0%, 100% {
-        text-shadow: 0 0 10px rgba(155,89,182,0.7);
-      }
-      50% {
-        text-shadow: 0 0 20px rgba(155,89,182,1);
-      }
-    }
-
-    .nav-link:hover {
-      transform: scale(1.2);
-      color: #fff;
-      animation: pulse 1s infinite;
-    }
-
-    /* Contact button outside box */
     .contact-static {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      color: #9b59b6;
-      text-decoration: none;
-      font-size: 1.5rem;
-      font-weight: 400;
-      transition: transform 0.3s ease, color 0.3s ease, text-shadow 0.5s ease;
-      text-shadow: 0 0 10px rgba(155,89,182,0.7);
+      font-size: 1.3rem;
     }
-
-    .contact-static:hover {
-      transform: scale(1.05);
-      color: #fff;
-      text-shadow: 0 0 20px rgba(155,89,182,1);
-    }
-
-    @media (max-width: 768px) {
-      .floating-box {
-        width: 90vw;
-        height: 50vh;
-      }
-      .nav-link {
-        font-size: 1.6rem;
-      }
-      .contact-static {
-        font-size: 1.3rem;
-      }
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
 
-  <div class="floating-box">
-    <a href="releases.html" class="nav-link">RELEASES</a>
-    <a href="mixes.html" class="nav-link">MIXES</a>
-    <a href="shows.html" class="nav-link">SHOWS</a>
-    <a href="mailing-list.html" class="nav-link">MAILING LIST</a>
-  </div>
+<div class="floating-box">
+  <a href="releases.html" class="nav-link">RELEASES</a>
+  <a href="mixes.html" class="nav-link">MIXES</a>
+  <a href="shows.html" class="nav-link">SHOWS</a>
+  <a href="mailing-list.html" class="nav-link">MAILING LIST</a>
+</div>
 
-  <a href="contact.html" class="contact-static">CONTACT</a>
+<a href="contact.html" class="contact-static">CONTACT</a>
 
-  <script>
-    const tabs = document.querySelectorAll(".nav-link");
-    const box = document.querySelector(".floating-box");
+<script>
+  const tabs = document.querySelectorAll(".nav-link");
+  const box = document.querySelector(".floating-box");
+  const tabData = [];
+  const speed = 0.25; // gentle speed
 
-    const tabData = [];
-    const speed = 0.2;
-    const swayStrength = 0.2;
+  const boxWidth = box.clientWidth;
+  const boxHeight = box.clientHeight;
 
-    const boxWidth = box.clientWidth;
-    const boxHeight = box.clientHeight;
+  tabs.forEach(tab => {
+    const x = Math.random() * (boxWidth - tab.offsetWidth);
+    const y = Math.random() * (boxHeight - tab.offsetHeight);
+    const vx = (Math.random() - 0.5) * speed;
+    const vy = (Math.random() - 0.5) * speed;
+    tabData.push({el: tab, x, y, vx, vy});
+    tab.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+  });
 
-    tabs.forEach(tab => {
-      const x = Math.random() * (boxWidth - tab.offsetWidth);
-      const y = Math.random() * (boxHeight - tab.offsetHeight);
-      const vx = (Math.random() - 0.5) * speed;
-      const vy = (Math.random() - 0.5) * speed;
+  function animate() {
+    tabData.forEach(tab => {
+      tab.x += tab.vx;
+      tab.y += tab.vy;
 
-      const swayX = Math.random() * 0.02;
-      const swayY = Math.random() * 0.02;
-      const swayPhase = Math.random() * 2 * Math.PI;
+      if (tab.x <= 0 || tab.x + tab.el.offsetWidth >= box.clientWidth) tab.vx *= -1;
+      if (tab.y <= 0 || tab.y + tab.el.offsetHeight >= box.clientHeight) tab.vy *= -1;
 
-      const rotation = (Math.random() - 0.5) * 5; // initial rotation (-2.5 to 2.5deg)
-      const rotationSpeed = (Math.random() - 0.5) * 0.05; // slow rotation
-
-      tabData.push({el: tab, x, y, vx, vy, swayX, swayY, swayPhase, rotation, rotationSpeed});
-      tab.style.left = x + "px";
-      tab.style.top = y + "px";
-      tab.style.transform = `rotate(${rotation}deg)`;
-    });
-
-    function animate() {
-      tabData.forEach(tab => {
-        // Update positions with sway
-        tab.x += tab.vx + Math.sin(tab.swayPhase) * tab.swayX;
-        tab.y += tab.vy + Math.sin(tab.swayPhase) * tab.swayY;
-        tab.swayPhase += 0.01;
-
-        // Bounce off box edges
-        if (tab.x <= 0 || tab.x + tab.el.offsetWidth >= box.clientWidth) tab.vx *= -1;
-        if (tab.y <= 0 || tab.y + tab.el.offsetHeight >= box.clientHeight) tab.vy *= -1;
-
-        // Avoid overlapping
-        tabData.forEach(other => {
-          if (other !== tab) {
-            const dx = (tab.x + tab.el.offsetWidth/2) - (other.x + other.el.offsetWidth/2);
-            const dy = (tab.y + tab.el.offsetHeight/2) - (other.y + other.el.offsetHeight/2);
-            const dist = Math.sqrt(dx*dx + dy*dy);
-            const minDist = 120;
-            if (dist < minDist && dist > 0) {
-              const overlap = (minDist - dist)/2;
-              tab.x += (dx/dist)*overlap;
-              tab.y += (dy/dist)*overlap;
-              other.x -= (dx/dist)*overlap;
-              other.y -= (dy/dist)*overlap;
-            }
+      // avoid overlap
+      tabData.forEach(other => {
+        if (other !== tab) {
+          const dx = (tab.x + tab.el.offsetWidth/2) - (other.x + other.el.offsetWidth/2);
+          const dy = (tab.y + tab.el.offsetHeight/2) - (other.y + other.el.offsetHeight/2);
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          const minDist = 120;
+          if (dist < minDist && dist > 0) {
+            const overlap = (minDist - dist)/2;
+            tab.x += (dx/dist)*overlap;
+            tab.y += (dy/dist)*overlap;
+            other.x -= (dx/dist)*overlap;
+            other.y -= (dy/dist)*overlap;
           }
-        });
-
-        // Update rotation
-        tab.rotation += tab.rotationSpeed;
-
-        tab.el.style.left = tab.x + "px";
-        tab.el.style.top = tab.y + "px";
-        tab.el.style.transform = `rotate(${tab.rotation}deg)`;
+        }
       });
 
-      requestAnimationFrame(animate);
-    }
-
-    animate();
-
-    window.addEventListener('resize', () => {
-      tabData.forEach(tab => {
-        tab.x = Math.min(tab.x, box.clientWidth - tab.el.offsetWidth);
-        tab.y = Math.min(tab.y, box.clientHeight - tab.el.offsetHeight);
-      });
+      tab.el.style.transform = `translate3d(${tab.x}px, ${tab.y}px, 0)`;
     });
-  </script>
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+
+  window.addEventListener('resize', () => {
+    tabData.forEach(tab => {
+      tab.x = Math.min(tab.x, box.clientWidth - tab.el.offsetWidth);
+      tab.y = Math.min(tab.y, box.clientHeight - tab.el.offsetHeight);
+    });
+  });
+</script>
 </body>
 </html>
+
