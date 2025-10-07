@@ -14,7 +14,6 @@
       font-family: Arial, sans-serif;
     }
 
-    /* Floating nav links */
     .nav-link {
       position: absolute;
       text-decoration: none;
@@ -35,7 +34,6 @@
       text-shadow: 0 0 20px #f5f5f5, 0 0 30px #f5f5f5, 0 0 40px #f5f5f5;
     }
 
-    /* Static Contact link */
     .contact-static {
       position: fixed;
       bottom: 20px;
@@ -59,7 +57,7 @@
   <a href="releases.html" class="nav-link">Releases</a>
   <a href="mixes.html" class="nav-link">Mixes</a>
   <a href="shows.html" class="nav-link">Shows</a>
-  <a href="contact.html" class="nav-link">Mailing List</a>
+  <a href="mailing.html" class="nav-link">Mailing List</a>
 
   <a href="contact.html" class="contact-static">Contact</a>
 
@@ -68,8 +66,8 @@
     const speed = 0.3;
     const directions = [];
     const positions = [];
+    const linkSize = 140; // approx. size for collision radius
 
-    // Random start positions
     links.forEach(link => {
       const x = Math.random() * (window.innerWidth - 150);
       const y = Math.random() * (window.innerHeight - 150);
@@ -83,21 +81,44 @@
 
     function animate() {
       for (let i = 0; i < links.length; i++) {
-        const link = links[i];
         const pos = positions[i];
         const dir = directions[i];
 
         pos.x += dir.dx;
         pos.y += dir.dy;
 
-        const width = 150;
+        const width = linkSize;
         const height = 60;
 
+        // Bounce off walls
         if (pos.x <= 0 || pos.x + width >= window.innerWidth) dir.dx *= -1;
         if (pos.y <= 0 || pos.y + height >= window.innerHeight - 100) dir.dy *= -1;
 
+        // Collision with other links
+        for (let j = i + 1; j < links.length; j++) {
+          const pos2 = positions[j];
+          const dx = pos2.x - pos.x;
+          const dy = pos2.y - pos.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < linkSize) {
+            // Basic bounce response
+            const angle = Math.atan2(dy, dx);
+            const overlap = (linkSize - dist) / 2;
+
+            pos.x -= Math.cos(angle) * overlap;
+            pos.y -= Math.sin(angle) * overlap;
+            pos2.x += Math.cos(angle) * overlap;
+            pos2.y += Math.sin(angle) * overlap;
+
+            // Swap directions for a simple bounce
+            [dir.dx, directions[j].dx] = [directions[j].dx, dir.dx];
+            [dir.dy, directions[j].dy] = [directions[j].dy, dir.dy];
+          }
+        }
+
         // Apply transform
-        link.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
+        links[i].style.transform = `translate(${pos.x}px, ${pos.y}px)`;
       }
 
       requestAnimationFrame(animate);
