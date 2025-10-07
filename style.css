@@ -191,7 +191,7 @@ footer {
 
 /* Each EP image */
 .release img {
-  width: 100%;
+  width: 80%;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
@@ -207,9 +207,9 @@ footer {
   margin-top: 0.5rem;
   text-decoration: none;
   background: black;
-  color: white;
+  color: #77029E;
   padding: 0.5rem 1rem;
-  border-radius: 8px;
+  border-radius: 2px;
   transition: 0.3s ease;
 }
 
