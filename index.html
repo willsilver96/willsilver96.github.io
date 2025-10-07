@@ -10,7 +10,7 @@
 
   <style>
     body {
-      background-color: #030303; /* pure black */
+      background-color: #030303;
       color: #77029e;
       font-family: 'Aileron Heavy', sans-serif;
       margin: 0;
@@ -20,18 +20,6 @@
       position: relative;
     }
 
-    /* MAIN TITLE TOP CENTER */
-    .main-name {
-      position: absolute;
-      top: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 4rem;
-      letter-spacing: 5px;
-      text-align: center;
-    }
-
-    /* NAV LINKS - floating, glow effect */
     .nav-link {
       position: absolute;
       text-decoration: none;
@@ -41,49 +29,98 @@
       text-shadow: 0 0 10px #77029e, 0 0 20px #77029e, 0 0 30px #77029e;
       filter: blur(0.5px);
       transition: transform 0.3s, color 0.3s, text-shadow 0.3s;
+      user-select: none;
     }
 
     .nav-link:hover {
-      transform: scale(1.3);
+      transform: scale(1.2);
       color: #f5f5f5;
       text-shadow: 0 0 20px #f5f5f5, 0 0 30px #f5f5f5, 0 0 40px #f5f5f5;
+    }
+
+    .contact-link {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.9rem;
+      text-decoration: none;
+      color: #77029e;
+      opacity: 0.7;
+      transition: opacity 0.3s;
+    }
+
+    .contact-link:hover {
+      opacity: 1;
+      text-shadow: 0 0 10px #77029e, 0 0 20px #77029e;
     }
   </style>
 </head>
 <body>
 
-  <div class="main-name">WILL SILVER</div>
+  <a href="mixes.html" class="nav-link">MIXES</a>
+  <a href="shows.html" class="nav-link">SHOWS</a>
+  <a href="releases.html" class="nav-link">RELEASES</a>
 
-  <a href="mixes.html" class="nav-link" id="mixes">MIXES</a>
-  <a href="shows.html" class="nav-link" id="shows">SHOWS</a>
-  <a href="releases.html" class="nav-link" id="releases">RELEASES</a>
-  <a href="contact.html" class="nav-link" id="contact">MAILING LIST</a>
+  <a href="mailto:willsilvermusic@gmail.com" class="contact-link">CONTACT</a>
 
   <script>
-    const links = document.querySelectorAll('.nav-link');
+    const links = Array.from(document.querySelectorAll('.nav-link'));
+    const speed = 0.3; // pixels per frame
+    const linkSize = 100; // approximate width/height for collision
+    const directions = [];
 
+    // Initialize random positions and directions
     links.forEach(link => {
-      // Base positions
-      let baseX = Math.random() * (window.innerWidth - 100);
-      let baseY = Math.random() * (window.innerHeight - 100);
-      let amplitudeX = 30 + Math.random() * 40; // horizontal drift
-      let amplitudeY = 20 + Math.random() * 30; // vertical drift
-      let speedX = 0.0003 + Math.random() * 0.0003; // very slow
-      let speedY = 0.0003 + Math.random() * 0.0003;
-      let phaseX = Math.random() * 2 * Math.PI;
-      let phaseY = Math.random() * 2 * Math.PI;
+      link.style.left = Math.random() * (window.innerWidth - 150) + 'px';
+      link.style.top = Math.random() * (window.innerHeight - 150) + 'px';
+      directions.push({
+        dx: (Math.random() - 0.5) * speed * 2,
+        dy: (Math.random() - 0.5) * speed * 2
+      });
+    });
 
-      function animate(time) {
-        const x = baseX + Math.sin(time * speedX + phaseX) * amplitudeX;
-        const y = baseY + Math.sin(time * speedY + phaseY) * amplitudeY;
+    function animate() {
+      for (let i = 0; i < links.length; i++) {
+        const link = links[i];
+        let rect = link.getBoundingClientRect();
 
-        link.style.left = x + 'px';
-        link.style.top = y + 'px';
+        // Bounce off walls
+        if (rect.left <= 0 || rect.right >= window.innerWidth) {
+          directions[i].dx *= -1;
+        }
+        if (rect.top <= 0 || rect.bottom >= window.innerHeight - 50) { // leave room for contact link
+          directions[i].dy *= -1;
+        }
 
-        requestAnimationFrame(animate);
+        // Move link
+        link.style.left = rect.left + directions[i].dx + 'px';
+        link.style.top = rect.top + directions[i].dy + 'px';
+
+        // Collision detection with other links
+        for (let j = i + 1; j < links.length; j++) {
+          const other = links[j];
+          const r1 = link.getBoundingClientRect();
+          const r2 = other.getBoundingClientRect();
+
+          if (!(r2.left > r1.right || r2.right < r1.left || r2.top > r1.bottom || r2.bottom < r1.top)) {
+            // Simple bounce: swap directions
+            [directions[i].dx, directions[j].dx] = [directions[j].dx, directions[i].dx];
+            [directions[i].dy, directions[j].dy] = [directions[j].dy, directions[i].dy];
+          }
+        }
       }
-
       requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    // Resize safety
+    window.addEventListener('resize', () => {
+      links.forEach(link => {
+        link.style.left = Math.min(parseFloat(link.style.left), window.innerWidth - 150) + 'px';
+        link.style.top = Math.min(parseFloat(link.style.top), window.innerHeight - 150) + 'px';
+      });
     });
   </script>
 
