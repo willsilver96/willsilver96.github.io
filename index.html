@@ -36,7 +36,7 @@
       text-decoration: none;
       color: #9b59b6;
       font-size: 2rem;
-      font-weight: 400; /* lighter font weight */
+      font-weight: 400;
       text-transform: uppercase;
       letter-spacing: 1px;
       transition: transform 0.3s ease, color 0.3s ease, text-shadow 0.5s ease;
@@ -112,7 +112,8 @@
     const box = document.querySelector(".floating-box");
 
     const tabData = [];
-    const speed = 0.3;
+    const speed = 0.2; // base bounce speed
+    const swayStrength = 0.2; // slow floating sway
 
     const boxWidth = box.clientWidth;
     const boxHeight = box.clientHeight;
@@ -123,16 +124,24 @@
       const vx = (Math.random() - 0.5) * speed;
       const vy = (Math.random() - 0.5) * speed;
 
-      tabData.push({el: tab, x, y, vx, vy});
+      // Random sway offsets for smooth drift
+      const swayX = Math.random() * 0.02;
+      const swayY = Math.random() * 0.02;
+      const swayPhase = Math.random() * 2 * Math.PI;
+
+      tabData.push({el: tab, x, y, vx, vy, swayX, swayY, swayPhase});
       tab.style.left = x + "px";
       tab.style.top = y + "px";
     });
 
     function animate() {
       tabData.forEach(tab => {
-        tab.x += tab.vx;
-        tab.y += tab.vy;
+        // Update positions
+        tab.x += tab.vx + Math.sin(tab.swayPhase) * tab.swayX;
+        tab.y += tab.vy + Math.sin(tab.swayPhase) * tab.swayY;
+        tab.swayPhase += 0.01; // controls sway speed
 
+        // Bounce off box edges
         if (tab.x <= 0 || tab.x + tab.el.offsetWidth >= box.clientWidth) tab.vx *= -1;
         if (tab.y <= 0 || tab.y + tab.el.offsetHeight >= box.clientHeight) tab.vy *= -1;
 
