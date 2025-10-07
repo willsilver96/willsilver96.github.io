@@ -14,112 +14,126 @@
       font-family: Arial, sans-serif;
     }
 
+    /* Floating box */
+    .floating-box {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80vw;
+      max-width: 1200px;
+      height: 60vh;
+      border: 2px solid #77029e; /* purple outline */
+      background: rgba(0, 0, 0, 0.05); /* subtle transparency */
+      overflow: hidden;
+    }
+
+    /* Tabs inside the box */
     .nav-link {
       position: absolute;
       text-decoration: none;
-      color: #77029e;
+      color: white;
       font-size: 2rem;
       font-weight: 600;
-      text-shadow: 0 0 10px #77029e, 0 0 20px #77029e, 0 0 30px #77029e;
-      filter: blur(0.5px);
-      transition: transform 0.3s ease, color 0.3s ease, text-shadow 0.3s ease;
       user-select: none;
-      backface-visibility: hidden;
-      transform-origin: center center;
+      border-radius: 6px;
+      padding: 0.5rem 1rem;
+      background: black;
+      transition: transform 0.3s ease, color 0.3s ease;
     }
 
     .nav-link:hover {
       transform: scale(1.2);
       color: #f5f5f5;
-      text-shadow: 0 0 20px #f5f5f5, 0 0 30px #f5f5f5, 0 0 40px #f5f5f5;
     }
 
+    /* Contact button outside box */
     .contact-static {
       position: fixed;
       bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
-      color: #77029e;
+      color: white;
       text-decoration: none;
       font-size: 1.5rem;
       font-weight: 600;
-      text-shadow: 0 0 10px #77029e, 0 0 20px #77029e;
-      transition: color 0.3s ease, text-shadow 0.3s ease;
-    }
-
-    .contact-static:hover {
-      color: #f5f5f5;
-      text-shadow: 0 0 20px #f5f5f5, 0 0 30px #f5f5f5, 0 0 40px #f5f5f5;
+      padding: 0.5rem 1.5rem;
+      background: black;
+      border-radius: 6px;
     }
   </style>
 </head>
 <body>
-  <a href="releases.html" class="nav-link">Releases</a>
-  <a href="mixes.html" class="nav-link">Mixes</a>
-  <a href="shows.html" class="nav-link">Shows</a>
-  <a href="mailing.html" class="nav-link">Mailing List</a>
 
-  <a href="contact.html" class="contact-static">Contact</a>
+  <div class="floating-box">
+    <a href="releases.html" class="nav-link">RELEASES</a>
+    <a href="mixes.html" class="nav-link">MIXES</a>
+    <a href="shows.html" class="nav-link">SHOWS</a>
+    <a href="mailing-list.html" class="nav-link">MAILING LIST</a>
+  </div>
+
+  <a href="contact.html" class="contact-static">CONTACT</a>
 
   <script>
     const links = Array.from(document.querySelectorAll('.nav-link'));
+    const box = document.querySelector('.floating-box');
     const speed = 0.3;
-    const directions = [];
+
     const positions = [];
-    const linkSize = 140; // approx. size for collision radius
+    const directions = [];
+
+    const boxWidth = box.clientWidth;
+    const boxHeight = box.clientHeight;
 
     links.forEach(link => {
-      const x = Math.random() * (window.innerWidth - 150);
-      const y = Math.random() * (window.innerHeight - 150);
+      const x = Math.random() * (boxWidth - link.offsetWidth);
+      const y = Math.random() * (boxHeight - link.offsetHeight);
       positions.push({ x, y });
       directions.push({
         dx: (Math.random() - 0.5) * speed * 2,
         dy: (Math.random() - 0.5) * speed * 2
       });
-      link.style.transform = `translate(${x}px, ${y}px)`;
+      link.style.left = x + 'px';
+      link.style.top = y + 'px';
     });
 
     function animate() {
-      for (let i = 0; i < links.length; i++) {
+      links.forEach((link, i) => {
         const pos = positions[i];
         const dir = directions[i];
 
         pos.x += dir.dx;
         pos.y += dir.dy;
 
-        const width = linkSize;
-        const height = 60;
+        // Bounce off box edges
+        if (pos.x <= 0 || pos.x + link.offsetWidth >= box.clientWidth) dir.dx *= -1;
+        if (pos.y <= 0 || pos.y + link.offsetHeight >= box.clientHeight) dir.dy *= -1;
 
-        // Bounce off walls
-        if (pos.x <= 0 || pos.x + width >= window.innerWidth) dir.dx *= -1;
-        if (pos.y <= 0 || pos.y + height >= window.innerHeight - 100) dir.dy *= -1;
+        // Avoid overlapping tabs (simple repulsion)
+        links.forEach((other, j) => {
+          if (i !== j) {
+            const pos2 = positions[j];
+            const dx = (pos.x + link.offsetWidth/2) - (pos2.x + other.offsetWidth/2);
+            const dy = (pos.y + link.offsetHeight/2) - (pos2.y + other.offsetHeight/2);
+            const dist = Math.sqrt(dx*dx + dy*dy);
+            const minDist = 120; // min distance between tabs
+            if (dist < minDist && dist > 0) {
+              const overlap = (minDist - dist)/2;
+              pos.x += (dx/dist)*overlap;
+              pos.y += (dy/dist)*overlap;
+              pos2.x -= (dx/dist)*overlap;
+              pos2.y -= (dy/dist)*overlap;
 
-        // Collision with other links
-        for (let j = i + 1; j < links.length; j++) {
-          const pos2 = positions[j];
-          const dx = pos2.x - pos.x;
-          const dy = pos2.y - pos.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-
-          if (dist < linkSize) {
-            // Basic bounce response
-            const angle = Math.atan2(dy, dx);
-            const overlap = (linkSize - dist) / 2;
-
-            pos.x -= Math.cos(angle) * overlap;
-            pos.y -= Math.sin(angle) * overlap;
-            pos2.x += Math.cos(angle) * overlap;
-            pos2.y += Math.sin(angle) * overlap;
-
-            // Swap directions for a simple bounce
-            [dir.dx, directions[j].dx] = [directions[j].dx, dir.dx];
-            [dir.dy, directions[j].dy] = [directions[j].dy, dir.dy];
+              // Swap velocities for simple bounce
+              [dir.dx, directions[j].dx] = [directions[j].dx, dir.dx];
+              [dir.dy, directions[j].dy] = [directions[j].dy, dir.dy];
+            }
           }
-        }
+        });
 
-        // Apply transform
-        links[i].style.transform = `translate(${pos.x}px, ${pos.y}px)`;
-      }
+        link.style.left = pos.x + 'px';
+        link.style.top = pos.y + 'px';
+      });
 
       requestAnimationFrame(animate);
     }
@@ -127,9 +141,9 @@
     animate();
 
     window.addEventListener('resize', () => {
-      positions.forEach(pos => {
-        pos.x = Math.min(pos.x, window.innerWidth - 150);
-        pos.y = Math.min(pos.y, window.innerHeight - 150);
+      links.forEach((link, i) => {
+        positions[i].x = Math.min(positions[i].x, box.clientWidth - link.offsetWidth);
+        positions[i].y = Math.min(positions[i].y, box.clientHeight - link.offsetHeight);
       });
     });
   </script>
