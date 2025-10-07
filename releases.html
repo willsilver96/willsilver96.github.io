@@ -19,7 +19,7 @@
 
   <section class="releases">
     <h1>Releases</h1>
-    <div class="release-grid">
+    <div class="release-grid" id="releaseGrid">
       <div class="release">
         <img src="images/ep1.jpg" alt="EP1 Cover">
         <h2>It's The Way U Make Me Feel</h2>
@@ -84,5 +84,12 @@
       </div>
     </div>
   </section>
+
+  <script>
+    // Reverse the order of releases on page load
+    const grid = document.getElementById('releaseGrid');
+    const releases = Array.from(grid.children);
+    releases.reverse().forEach(release => grid.appendChild(release));
+  </script>
 </body>
 </html>
